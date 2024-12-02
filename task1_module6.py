@@ -11,10 +11,10 @@ class Name(Field):
 		pass
 
 class Phone(Field):
-		def __init__(self, value):
-            if not value.isdigit() or len (value) != 10:
-                raise ValueError
-            super().__init__(value)
+	def __init__(self, value):
+        if not value.isdigit() or len (value) != 10:
+            raise ValueError
+        super().__init__(value)
 
 class Record:
     def __init__(self, name):
@@ -23,12 +23,14 @@ class Record:
 
     def add_phone (self, phone):
             self.phones.append (Phone (phone))
+
     def remove_phone (self, phone):
             for p in self.phones:
                 if p.value == phone:
                     self.phones.remove(p)
                     return 
-            raise valueError (f"Phone {phone} not found")
+            raise ValueErroralueError (f"Phone {phone} not found")
+    
     def edit_phone (self, old_phone, new_phone):
             for p in self.phones:
                 if p.value == old_phone:
@@ -36,19 +38,19 @@ class Record:
                         self.add_phone(new_phone)
                         return
             raise ValueError (f"Phone {old_phone} not found")
+    
     def find_phones (self, phone):
             for p in self.phones:
                     if p.value == phone:
                             return p
-                    return NotImplementedone
+                    return NotImplemented
     
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
-class AddressBook(UserDict):
-       
+class AddressBook(UserDict): 
 	def add_record(self, record):
-            self.data[record.name.value] = record
+        self.data[record.name.value] = record
 
     def find(self, name):
         return self.data.get(name, None)
