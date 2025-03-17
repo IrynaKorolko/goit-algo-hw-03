@@ -15,11 +15,11 @@ class AddressBook:
     def __str__ (self):
         return "\n".join([f"{contact.name} - {contact.phone}" for contact in self.contacts])
                          
-    def save_data (book,filename= "addressbook.pkl"):
+    def save_data (self,filename= "addressbook.pkl"):
         with open (filename, "wb") as f:
-            pickle.dump (book, f)
-
-    def load_data (filename = "addressbook.pkl"):
+            pickle.dump (self, f)
+    @classmethod
+    def load_data (cls, filename = "addressbook.pkl"):
         try:
             with open(filename, "rb") as f:
                 return pickle.load(f)  
@@ -27,5 +27,14 @@ class AddressBook:
             return AddressBook()
 def main():
         book = AddressBook.load_data()
+        person1 = Person("John Doe", "john@example.com", "123-456-7890", True)
+        person2 = Person("Jane Smith", "jane@example.com", "987-654-3210", False)
+        book.add_contacts(person1)
+        book.add_contacts(person2)
+
+        print("Address Book:")
+        print(book)
+
+        book.save_data ()
 if __name__ == "__main__":
     main()
