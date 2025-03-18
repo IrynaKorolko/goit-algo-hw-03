@@ -10,31 +10,33 @@ class Person:
 class AddressBook:
     def __init__(self):
         self.contacts = []
-    def add_contacts (self, person):
+    def add_contact (self, person):
         self.contacts.append (person)
     def __str__ (self):
         return "\n".join([f"{contact.name} - {contact.phone}" for contact in self.contacts])
                          
-    def save_data (self,filename= "addressbook.pkl"):
+    def save_data(self,filename= "addressbook.pkl"):
         with open (filename, "wb") as f:
             pickle.dump (self, f)
+
     @classmethod
-    def load_data (cls, filename = "addressbook.pkl"):
+    def load_data(cls, filename = "addressbook.pkl"):
         try:
             with open(filename, "rb") as f:
                 return pickle.load(f)  
-        except FileNotFoundError:
-            return AddressBook()
+        except (FileNotFoundError, EOFError):
+            return cls()
 def main():
         book = AddressBook.load_data()
-        person1 = Person("John Doe", "john@example.com", "123-456-7890", True)
-        person2 = Person("Jane Smith", "jane@example.com", "987-654-3210", False)
-        book.add_contacts(person1)
-        book.add_contacts(person2)
+        if not book.contacts:
+            person1 = Person("John Doe", "john@example.com", "123-456-7890", True)
+            person2 = Person("Jane Smith", "jane@example.com", "987-654-3210", False)
+            book.add_contact(person1)
+            book.add_contact(person2)
+            book.save_data ()
 
         print("Address Book:")
         print(book)
 
-        book.save_data ()
 if __name__ == "__main__":
     main()
